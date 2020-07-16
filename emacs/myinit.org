@@ -292,7 +292,7 @@
   (require 'org-habit)
   (setq org-habit-show-all-today t)
   (setq org-habit-graph-column 50)
-  (setq org-habit-preceding-days 60)
+  (setq org-habit-preceding-days 55)
   (setq org-habit-following-days 7)
 #+END_SRC
 *** org-agenda
@@ -303,7 +303,7 @@
 
   ;; line
   (setq halfbar '==============================================)
-  (setq wholebar '=============================================================================================================)
+  (setq wholebar '================================================================================================================)
   (setq title-length 20)
 
   ;; headers
