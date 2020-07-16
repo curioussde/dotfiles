@@ -243,7 +243,7 @@
 (add-to-list 'org-modules 'org-habit)
 (require 'org-habit)
 (setq org-habit-show-all-today t)
-(setq org-habit-graph-column 40)
+(setq org-habit-graph-column 50)
 (setq org-habit-preceding-days 60)
 (setq org-habit-following-days 7)
 
@@ -252,8 +252,8 @@
 (setq org-agenda-start-on-weekday nil)
 
 ;; line
-(setq halfbar '================================================)
-(setq wholebar '=================================================================================================================)
+(setq halfbar '==============================================)
+(setq wholebar '=============================================================================================================)
 (setq title-length 20)
 
 ;; headers
