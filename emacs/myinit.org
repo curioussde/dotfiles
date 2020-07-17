@@ -7,10 +7,15 @@
 #+END_SRC
 ** themes
    #+BEGIN_SRC emacs-lisp
-(use-package zenburn-theme
-  :ensure t
-  :config 
-    (load-theme 'zenburn t))
+     ;; (use-package zenburn-theme
+     ;;   :ensure t
+     ;;   :config
+     ;;   (load-theme 'zenburn t))
+
+     (use-package atom-one-dark-theme
+       :ensure t
+       :config
+       (load-theme 'atom-one-dark t))
    #+END_SRC
 * navigation
 ** keys
@@ -69,6 +74,13 @@
 :init
 (global-evil-mc-mode 1))
 #+END_SRC
+** evil-commentary
+#+BEGIN_SRC emacs-lisp
+  (use-package evil-commentary
+    :ensure t
+    :init
+    (evil-commentary-mode))
+#+END_SRC
 ** helm
 #+BEGIN_SRC emacs-lisp
 (use-package helm
@@ -123,10 +135,24 @@
    #+END_SRC
 ** flycheck
 #+BEGIN_SRC emacs-lisp
-(use-package flycheck
-  :ensure t
-  :init
-  (global-flycheck-mode t))
+  (use-package flycheck
+    :ensure t
+    :init (global-flycheck-mode))
+
+  (use-package flycheck-inline
+    :ensure t
+    :init (global-flycheck-inline-mode))
+#+END_SRC
+** gradle/grails/groovy
+#+BEGIN_SRC emacs-lisp
+  (use-package gradle-mode
+    :ensure t)
+
+  (use-package grails-mode
+    :ensure t)
+
+  (use-package groovy-mode
+    :ensure t)
 #+END_SRC
 ** magit
 #+BEGIN_SRC emacs-lisp

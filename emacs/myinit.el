@@ -1,10 +1,15 @@
 ;(setq inhibit-startup-message t)
 (tool-bar-mode -1)
 
-(use-package zenburn-theme
+;; (use-package zenburn-theme
+;;   :ensure t
+;;   :config
+;;   (load-theme 'zenburn t))
+
+(use-package atom-one-dark-theme
   :ensure t
-  :config 
-    (load-theme 'zenburn t))
+  :config
+  (load-theme 'atom-one-dark t))
 
 ; shift arrow to move around split sindows
 (windmove-default-keybindings)
@@ -48,6 +53,11 @@
 :ensure t
 :init
 (global-evil-mc-mode 1))
+
+(use-package evil-commentary
+  :ensure t
+  :init
+  (evil-commentary-mode))
 
 (use-package helm
 :ensure t
@@ -93,8 +103,20 @@
 
 (use-package flycheck
   :ensure t
-  :init
-  (global-flycheck-mode t))
+  :init (global-flycheck-mode))
+
+(use-package flycheck-inline
+  :ensure t
+  :init (global-flycheck-inline-mode))
+
+(use-package gradle-mode
+  :ensure t)
+
+(use-package grails-mode
+  :ensure t)
+
+(use-package groovy-mode
+  :ensure t)
 
 (use-package magit
 :ensure t
@@ -244,7 +266,7 @@
 (require 'org-habit)
 (setq org-habit-show-all-today t)
 (setq org-habit-graph-column 50)
-(setq org-habit-preceding-days 60)
+(setq org-habit-preceding-days 55)
 (setq org-habit-following-days 7)
 
 (global-set-key "\C-ca" 'org-agenda)
@@ -253,7 +275,7 @@
 
 ;; line
 (setq halfbar '==============================================)
-(setq wholebar '=============================================================================================================)
+(setq wholebar '================================================================================================================)
 (setq title-length 20)
 
 ;; headers
