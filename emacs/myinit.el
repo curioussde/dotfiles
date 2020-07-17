@@ -20,6 +20,14 @@
 (add-hook 'org-shiftright-final-hook 'windmove-right)
 (setq org-support-shift-select 'always)
 
+(use-package buffer-move
+  :ensure t
+  :config
+  (global-set-key (kbd "<s-S-left>")   'buf-move-left)
+  (global-set-key (kbd "<s-S-right>")  'buf-move-right)
+  (global-set-key (kbd "<s-S-up>")  'buf-move-up)
+  (global-set-key (kbd "<s-S-down>")  'buf-move-down))
+
 (desktop-save-mode 1) ;; resume
 (fset 'yes-or-no-p 'y-or-n-p) ;; y/n instead of yes/no
 
@@ -213,20 +221,14 @@
 (use-package treemacs-persp ;;treemacs-persective if you use perspective.el vs. persp-mode
   :after treemacs persp-mode ;;or perspective vs. persp-mode
   :ensure t
-  :config (treemacs-set-scope-type 'Perspectives))
+  :config (treemacs-set-scope-type 'Perspectives))   
+
+(add-hook 'emacs-startup-hook 'treemacs)
 
 (use-package saveplace
   :ensure t
   :init
   (save-place-mode 1))
-
-(use-package buffer-move
-  :ensure t
-  :config
-  (global-set-key (kbd "<C-S-left>")   'buf-move-left)
-  (global-set-key (kbd "<C-S-right>")  'buf-move-right)
-  (global-set-key (kbd "<C-S-up>")  'buf-move-up)
-  (global-set-key (kbd "<C-S-down>")  'buf-move-down))
 
 (use-package aggressive-indent
 :ensure t
@@ -500,6 +502,8 @@
   ;;    (use-package htmlize :ensure t)
   ;;
   ;;    (setq org-ditaa-jar-path "/usr/share/ditaa/ditaa.jar")
+
+(setq org-refile-targets '((org-agenda-files :maxlevel . 3)))
 
 (setq org-agenda-overriding-columns-format org-columns-default-format)
 (setq org-startup-indented t)
