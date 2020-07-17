@@ -41,3 +41,6 @@ alias sa='screen -r'
 
 # EMACS ALIAS
 alias e='emacs'
+
+# PYTHON DEFAULT TO 3
+alias python=/usr/local/bin/python3.7

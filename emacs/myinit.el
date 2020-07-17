@@ -20,14 +20,6 @@
 (add-hook 'org-shiftright-final-hook 'windmove-right)
 (setq org-support-shift-select 'always)
 
-(use-package buffer-move
-  :ensure t
-  :config
-  (global-set-key (kbd "<s-S-left>")   'buf-move-left)
-  (global-set-key (kbd "<s-S-right>")  'buf-move-right)
-  (global-set-key (kbd "<s-S-up>")  'buf-move-up)
-  (global-set-key (kbd "<s-S-down>")  'buf-move-down))
-
 (desktop-save-mode 1) ;; resume
 (fset 'yes-or-no-p 'y-or-n-p) ;; y/n instead of yes/no
 
@@ -131,6 +123,13 @@
 :config
 (global-set-key (kbd "C-x g") 'magit-status))
 
+(use-package projectile
+  :ensure t
+  :config
+  (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+  (projectile-mode +1))
+
 (use-package treemacs
   :ensure t
   :defer t
@@ -229,6 +228,14 @@
   :ensure t
   :init
   (save-place-mode 1))
+
+(use-package buffer-move
+  :ensure t
+  :config
+  (global-set-key (kbd "<s-S-left>")   'buf-move-left)
+  (global-set-key (kbd "<s-S-right>")  'buf-move-right)
+  (global-set-key (kbd "<s-S-up>")  'buf-move-up)
+  (global-set-key (kbd "<s-S-down>")  'buf-move-down))
 
 (use-package aggressive-indent
 :ensure t
