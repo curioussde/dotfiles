@@ -259,8 +259,19 @@
 ** saveplace
 #+BEGIN_SRC emacs-lisp
   (use-package saveplace
+    :ensure t
     :init
     (save-place-mode 1))
+#+END_SRC
+** buffer-move
+#+BEGIN_SRC emacs-lisp
+  (use-package buffer-move
+    :ensure t
+    :config
+    (global-set-key (kbd "<s-S-left>")   'buf-move-left)
+    (global-set-key (kbd "<s-S-right>")  'buf-move-right)
+    (global-set-key (kbd "<s-S-up>")  'buf-move-up)
+    (global-set-key (kbd "<s-S-down>")  'buf-move-down))
 #+END_SRC
 ** aggressive-indent
 #+BEGIN_SRC emacs-lisp

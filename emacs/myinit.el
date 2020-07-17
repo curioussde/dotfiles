@@ -216,8 +216,17 @@
   :config (treemacs-set-scope-type 'Perspectives))
 
 (use-package saveplace
+  :ensure t
   :init
   (save-place-mode 1))
+
+(use-package buffer-move
+  :ensure t
+  :config
+  (global-set-key (kbd "<C-S-left>")   'buf-move-left)
+  (global-set-key (kbd "<C-S-right>")  'buf-move-right)
+  (global-set-key (kbd "<C-S-up>")  'buf-move-up)
+  (global-set-key (kbd "<C-S-down>")  'buf-move-down))
 
 (use-package aggressive-indent
 :ensure t
