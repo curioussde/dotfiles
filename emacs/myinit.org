@@ -510,7 +510,7 @@
 
           ("at" "todo" entry (file+headline "~/Dropbox/org/personal.org" "todo")
            "* TODO %^{PROMPT}
-    SCHEDULED: %^T
+    DEADLINE: %^T
     %?")
 
           ("ah" "habits" entry (file+headline "~/Dropbox/org/personal.org" "habits")
