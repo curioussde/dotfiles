@@ -325,7 +325,21 @@
   ("CANCELED" . "skyblue")
   ("DEFERRED" . "skyblue")))
 #+END_SRC
-*** org-bullets
+*** org-languages
+#+BEGIN_SRC emacs-lisp
+  (setq org-babel-load-languages
+        '((python . t)
+          (shell . t)
+          (js . t)
+          (org . t)
+          (C . t)
+          (sql . t)
+          (java . t)
+          (plantuml . t)
+          (typescript . t)
+          ))
+#+END_SRC
+*** org-bullets 
 #+BEGIN_SRC emacs-lisp
   (use-package org-bullets
   :ensure t
@@ -404,7 +418,7 @@
   ;; sort tasks in order of when they are due and then by priority
   (setq org-agenda-sorting-strategy
         (quote
-         ((agenda deadline-up  habit-down time-up 
+         ((agenda deadline-up habit-down time-up 
                   priority-down timestamp-down category-keep))))
 
   ;; use am/pm instead 24h format
@@ -414,13 +428,9 @@
   (setq org-agenda-custom-commands
         '(("h" "My Hourly Schedule for Today and Tomorrow"
            ((agenda "" ((org-agenda-span 1)
-                        (org-agenda-sorting-strategy
-                         (quote ((agenda time-up priority-down tag-up) )))
                         (org-agenda-overriding-header (create-first-header "TODAY"))))
             (agenda "" ((org-agenda-span 1)
                         (org-agenda-start-day "+1d")
-                        (org-agenda-sorting-strategy
-                         (quote ((agenda time-up priority-down tag-up) )))
                         (org-agenda-overriding-header (create-header "TOMORROW"))))))
           ("d" "My Daily Schedule for Next Month"
            ((agenda "" ((org-agenda-span 30)
