@@ -273,6 +273,18 @@
 ("CANCELED" . "skyblue")
 ("DEFERRED" . "skyblue")))
 
+(setq org-babel-load-languages
+      '((python . t)
+        (shell . t)
+        (js . t)
+        (org . t)
+        (C . t)
+        (sql . t)
+        (java . t)
+        (plantuml . t)
+        (typescript . t)
+        ))
+
 (use-package org-bullets
 :ensure t
 :init
@@ -298,7 +310,7 @@
 
 ;; headers
 (defun create-header (title)
-  (format "\n\n\n%s\n%s%s%s\n%s\n"
+  (format "\n\n%s\n%s%s%s\n%s\n"
           (symbol-value 'wholebar)
           (symbol-value 'halfbar)
           (center-string title (symbol-value 'title-length))
@@ -312,6 +324,7 @@
           (center-string title (symbol-value 'title-length))
           (symbol-value 'halfbar)
           (symbol-value 'wholebar)))
+
 ;; center string format
 ;; use-case example:
 ;; (center-string "KJF" 10) ==> "   KJF    "
@@ -346,7 +359,7 @@
 ;; sort tasks in order of when they are due and then by priority
 (setq org-agenda-sorting-strategy
       (quote
-       ((agenda deadline-up  habit-down time-up 
+       ((agenda deadline-up habit-down time-up 
                 priority-down timestamp-down category-keep))))
 
 ;; use am/pm instead 24h format
@@ -355,21 +368,23 @@
 ;; my custom view of agenda and todos
 (setq org-agenda-custom-commands
       '(("h" "My Hourly Schedule for Today and Tomorrow"
-         ((agenda "" ((org-agenda-span 1)
-                      (org-agenda-sorting-strategy
-                       (quote ((agenda time-up priority-down tag-up) )))
-                      (org-agenda-overriding-header (create-first-header "TODAY"))))
+         ((agenda "" ((org-agenda-time-grid nil)
+                      (org-agenda-span 1)
+                      (org-deadline-warning-days 365)
+                      (org-agenda-entry-types '(:deadline))
+                      (org-agenda-overriding-header (create-first-header "DEADLINES"))))
+          (agenda "" ((org-agenda-span 1)
+                      (org-agenda-skip-function '(org-agenda-skip-entry-if 'deadline 'deadline))
+                      (org-agenda-overriding-header (create-header "TODAY"))))
           (agenda "" ((org-agenda-span 1)
                       (org-agenda-start-day "+1d")
-                      (org-agenda-sorting-strategy
-                       (quote ((agenda time-up priority-down tag-up) )))
                       (org-agenda-overriding-header (create-header "TOMORROW"))))))
         ("d" "My Daily Schedule for Next Month"
          ((agenda "" ((org-agenda-span 30)
                       (org-agenda-start-on-weekday nil)
                       (org-agenda-show-all-dates t)
                       (org-agenda-time-grid nil)
-                      ;; (org-agenda-start-day "+1d")
+                      ;; (org-agenda-start-day "+1d")q
                       (org-agenda-overriding-header (create-first-header "NEXT MONTH"))))))
         ("t" "My Todo items"
          (alltodo "" ((org-agenda-overriding-header (create-header "OTHER TODO's"))))
@@ -378,11 +393,11 @@
                       (org-agenda-overriding-header (create-header "ALL TODO's")))))))
 
 ;; define custom time grid
-(setq org-agenda-time-grid
-      (quote
-       ((daily today remove-match)
-        (500 600 700 800 900 1000 1100 1200 1300 1400 1500 1600 1700 1800 1900 2000 2100 2200 2300 2400)
-        "........" "----------------------------------------------------------------------------------")))
+;; (setq org-agenda-time-grid
+;;       (quote
+;;        ((daily today remove-match)
+;;         (600 700 800 900 1000 1100 1200 1300 1400 1500 1600 1700 1800 1900 2000 2100 2200 2300 2400)
+;;         "........" "----------------------------------------------------------------------------------")))
 
 ;; ;; setting block times as different colors
 ;; (defun org-agenda-log-mode-colorize-block ()
@@ -450,7 +465,7 @@
 
         ("at" "todo" entry (file+headline "~/Dropbox/org/personal.org" "todo")
          "* TODO %^{PROMPT}
-  SCHEDULED: %^T
+  DEADLINE: %^T
   %?")
 
         ("ah" "habits" entry (file+headline "~/Dropbox/org/personal.org" "habits")
