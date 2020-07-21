@@ -442,7 +442,7 @@
                         ;; (org-agenda-start-day "+1d")q
                         (org-agenda-overriding-header (create-first-header "NEXT MONTH"))))))))
 
-  define custom time grid
+  ;; define custom time grid
   (setq org-agenda-time-grid
         (quote
          ((daily today remove-match)
