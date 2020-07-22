@@ -1,4 +1,14 @@
 #+TITLE: MY EMACS SETTINGS
+* path
+** package-initialize
+#+BEGIN_SRC emacs-lisp
+  (use-package exec-path-from-shell
+    :ensure exec-path-from-shell
+    :config
+    (progn
+      (when (memq window-system '(mac ns))
+        (exec-path-from-shell-initialize))))
+#+END_SRC
 * look & feel
 ** interface
 #+BEGIN_SRC emacs-lisp
@@ -428,8 +438,6 @@
                         (org-agenda-overriding-header (create-header "Today's tasks"))))
             (agenda "" ((org-agenda-span 1)
                         (org-agenda-skip-function '(org-agenda-skip-entry-if 'deadline 'deadline))
-                                          ;(org-agenda-prefix-format "     ")
-		      
                         (org-agenda-overriding-header (create-header "Schedule"))))
             (agenda "" ((org-agenda-span 1)
                         (org-agenda-start-day "+1d")

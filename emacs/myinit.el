@@ -1,3 +1,10 @@
+(use-package exec-path-from-shell
+  :ensure exec-path-from-shell
+  :config
+  (progn
+    (when (memq window-system '(mac ns))
+      (exec-path-from-shell-initialize))))
+
 ;(setq inhibit-startup-message t)
 (tool-bar-mode -1)
 
@@ -368,8 +375,11 @@
                       (org-agenda-overriding-header (create-header "Today's tasks"))))
           (agenda "" ((org-agenda-span 1)
                       (org-agenda-skip-function '(org-agenda-skip-entry-if 'deadline 'deadline))
+<<<<<<< Updated upstream
                                         ;(org-agenda-prefix-format "     ")
 
+=======
+>>>>>>> Stashed changes
                       (org-agenda-overriding-header (create-header "Schedule"))))
           (agenda "" ((org-agenda-span 1)
                       (org-agenda-start-day "+1d")
