@@ -378,12 +378,12 @@
 
   ;; headers
   (defun create-header (title)
-    (format "\n\n\n⚡ %s:\n%s\n"
+    (format "\n\n⚡ %s:\n%s"
             (symbol-value 'title)
             (symbol-value 'title-underline)))
 
   (defun create-first-header (title)
-    (format "⚡ %s:\n%s\n"
+    (format "⚡ %s:\n%s"
             (symbol-value 'title)
             (symbol-value 'title-underline)))
 
@@ -417,28 +417,24 @@
   ;; use am/pm instead 24h format
   (setq org-agenda-timegrid-use-ampm t)
 
-
-
   ;; my custom view of agenda and todos
   (setq org-agenda-custom-commands
-        '(("h" "My Hourly Schedule for Today and Tomorrow"
-           ((agenda "" ((org-agenda-time-grid nil)
-                        (org-agenda-span 1)
-                        (org-deadline-warning-days 365)
-                        (org-agenda-prefix-format "     ")
-                        (org-agenda-sorting-strategy '(deadline-down))
-                        (org-agenda-entry-types '(:deadline))
-                        (org-agenda-overriding-header (create-first-header "Upcoming deadlines"))))
-            (tags-todo "SCHEDULED<\"<today>\""
+        '(("c" "My Custom Summary for Today"
+           ((tags-todo "SCHEDULED<\"<today>\""
                        ((org-agenda-sorting-strategy '(timestamp-down))
-                        (org-agenda-overriding-header (create-header "Overdue tasks"))))
-            (tags-todo "SCHEDULED>\"<today>\"&SCHEDULED<\"<tomorrow>\""
+                        (org-agenda-overriding-header (create-first-header "Overdue tasks"))))
+            (tags-todo "SCHEDULED>=\"<today>\"&SCHEDULED<\"<tomorrow>\"|DEADLINE<\"<tomorrow>\""
                        ((org-agenda-sorting-strategy '(timestamp-down))
-                        (org-agenda-todo-keyword-format "[ ]")
                         (org-agenda-overriding-header (create-header "Today's tasks"))))
             (agenda "" ((org-agenda-span 1)
                         (org-agenda-skip-function '(org-agenda-skip-entry-if 'deadline 'deadline))
                         (org-agenda-overriding-header (create-header "Schedule"))))
+            (agenda "" ((org-agenda-time-grid nil)
+                        (org-agenda-span 1)
+                        (org-deadline-warning-days 365)
+                        (org-agenda-sorting-strategy '(deadline-down))
+                        (org-agenda-entry-types '(:deadline))
+                        (org-agenda-overriding-header (create-header "Upcoming deadlines"))))
             (agenda "" ((org-agenda-span 1)
                         (org-agenda-start-day "+1d")
                         (org-agenda-overriding-header (create-header "TOMORROW"))))))
