@@ -490,10 +490,9 @@
         '(("a" "azu personal")
 
           ("aa" "appointments" entry (file+headline "~/Dropbox/org/personal.org" "appointments")
-           "* TODO %^{PROMPT}
-    SCHEDULED: %^t
-    %?")
-	
+           "* TODO %?
+    SCHEDULED: %^t")
+
           ("ab" "buy" entry (file+headline "~/Dropbox/org/personal.org" "buy")
            "* TODO %^{PROMPT}
     DEADLINE: %^T SCHEDULED: %T
@@ -511,21 +510,20 @@
     %?" :prepend t)
 
           ("ar" "reminders" entry (file+headline "~/Dropbox/org/personal.org" "reminders")
-           "* TODO %^{PROMPT}
-    SCHEDULED: %^T
-    %?")
+           "* TODO %?
+    SCHEDULED: %^T")
 
           ("at" "todo" entry (file+headline "~/Dropbox/org/personal.org" "todo")
-           "* TODO %^{PROMPT}
-    DEADLINE: %^T
-    %?")
+           "* TODO %?
+    DEADLINE: %^T")
 
           ("ah" "habits" entry (file+headline "~/Dropbox/org/personal.org" "habits")
-           "* TODO %^{PROMPT}
+           "* TODO %?
+    SCHEDULED: %^T
     :PROPERTIES:
     :STYLE:    habit
     :END:
-    %?")
+    ")
 
 
 
@@ -534,14 +532,12 @@
           ("w" "work related")
 
           ("wa" "appointments" entry (file+headline "~/Dropbox/org/work.org" "meetings")
-           "* TODO %^{PROMPT}
-    SCHEDULED: %^t
-    %?")
+           "* TODO %?
+    SCHEDULED: %^t")
 
           ("wt" "todo" entry (file+headline "~/Dropbox/org/work.org" "todos")
-           "* TODO %^{PROMPT}
-    DEADLINE: %^t
-    %?")
+           "* TODO %?
+    DEADLINE: %^t")
 
           ("wl" "link" entry (file+headline "~/Dropbox/org/work.org" "links")
            "* [[%^{PROMPT}][%?")
