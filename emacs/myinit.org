@@ -14,6 +14,7 @@
 #+BEGIN_SRC emacs-lisp
   (setq inhibit-startup-message t)
   (add-hook 'after-init-hook (lambda () (org-agenda nil "c")))
+  (add-hook 'prog-mode-hook 'linum-mode)
   (tool-bar-mode -1)
 #+END_SRC
 ** tabs
@@ -63,15 +64,15 @@
 #+END_SRC
 ** themes
    #+BEGIN_SRC emacs-lisp
-     ;; (use-package zenburn-theme
-     ;;   :ensure t
-     ;;   :config
-     ;;   (load-theme 'zenburn t))
-
-     (use-package atom-one-dark-theme
+     (use-package zenburn-theme
        :ensure t
        :config
-       (load-theme 'atom-one-dark t))
+       (load-theme 'zenburn t))
+
+     ;; (use-package atom-one-dark-theme
+     ;;   :ensure t
+     ;;   :config
+     ;;   (load-theme 'atom-one-dark t))
    #+END_SRC
 * navigation
 ** keys

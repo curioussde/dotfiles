@@ -7,6 +7,7 @@
 
 (setq inhibit-startup-message t)
 (add-hook 'after-init-hook (lambda () (org-agenda nil "c")))
+(add-hook 'prog-mode-hook 'linum-mode)
 (tool-bar-mode -1)
 
 ;; (use-package tabbar
@@ -51,15 +52,15 @@
   (when (member "Arial" (font-family-list))
     (centaur-tabs-change-fonts "Arial" 130)))
 
-;; (use-package zenburn-theme
-;;   :ensure t
-;;   :config
-;;   (load-theme 'zenburn t))
-
-(use-package atom-one-dark-theme
+(use-package zenburn-theme
   :ensure t
   :config
-  (load-theme 'atom-one-dark t))
+  (load-theme 'zenburn t))
+
+;; (use-package atom-one-dark-theme
+;;   :ensure t
+;;   :config
+;;   (load-theme 'atom-one-dark t))
 
 ; shift arrow to move around split sindows
 (windmove-default-keybindings)
