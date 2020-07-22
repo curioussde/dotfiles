@@ -12,8 +12,54 @@
 * look & feel
 ** interface
 #+BEGIN_SRC emacs-lisp
-;(setq inhibit-startup-message t)
-(tool-bar-mode -1)
+  (setq inhibit-startup-message t)
+  (add-hook 'after-init-hook (lambda () (org-agenda nil "c")))
+  (tool-bar-mode -1)
+#+END_SRC
+** tabs
+#+BEGIN_SRC emacs-lisp
+  ;; (use-package tabbar
+  ;;   :ensure t
+  ;;   :config
+
+  ;;   ;; (set-face-attribute 'tabbar-separator nil :background "gray20" :height 1)
+
+  ;;   ;; (set-face-attribute 'tabbar-default nil :background "gray20" :foreground "gray60" :distant-foreground "gray50" :family "Helvetica Neue" :box nil :height 1.5)
+  ;;   ;; (set-face-attribute 'tabbar-unselected nil :background "gray20" :foreground "black" :box nil)
+  ;;   ;; (set-face-attribute 'tabbar-modified nil :foreground "red4" :box nil :inherit 'tabbar-unselected)
+  ;;   ;; (set-face-attribute 'tabbar-selected nil :background "#4090c0" :foreground "white" :box nil :inherit 'tabbar-selected)
+  ;;   ;; (set-face-attribute 'tabbar-selected-modified nil :inherit 'tabbar-selected :foreground "GoldenRod2" :box nil)
+  ;;   ;; (set-face-attribute 'tabbar-button nil :box nil)
+
+  ;;   (tabbar-mode 1)
+  ;;   )
+
+  ;; (use-package tabbar-ruler
+  ;;   :ensure t)
+  ;; (setq tabbar-ruler-global-tabbar t)
+  ;; (global-set-key (kbd "C-c t") 'tabbar-ruler-move)
+
+  (use-package centaur-tabs
+    :demand
+    :bind (("C-S-<tab>" . centaur-tabs-backward)
+           ("C-<tab>" . centaur-tabs-forward)
+           ("C-x p" . centaur-tabs-counsel-switch-group))
+    :custom
+    (centaur-tabs-set-bar 'under)
+    (x-underline-at-descent-line t)
+    (centaur-tabs-set-modified-marker t)
+    (centaur-tabs-modified-marker " ● ")
+    (centaur-tabs-cycle-scope 'tabs)
+    (centaur-tabs-height 30)
+    (centaur-tabs-set-icons t)
+    (centaur-tabs-close-button " × ")
+    :config
+    (centaur-tabs-mode +1)
+    (centaur-tabs-headline-match)
+    (centaur-tabs-group-by-projectile-project)
+    (when (member "Arial" (font-family-list))
+      (centaur-tabs-change-fonts "Arial" 130)))
+
 #+END_SRC
 ** themes
    #+BEGIN_SRC emacs-lisp
@@ -41,7 +87,7 @@
    #+END_SRC
 ** mode
    #+BEGIN_SRC emacs-lisp
-     (desktop-save-mode 1) ;; resume
+     ;; (desktop-save-mode 1) ;; resume
      (fset 'yes-or-no-p 'y-or-n-p) ;; y/n instead of yes/no
    #+END_SRC
 ** backups
@@ -124,13 +170,22 @@
     (ac-config-default)
     (global-auto-complete-mode t)))
    #+END_SRC
-** modeline
+** modeline/powerline
    #+BEGIN_SRC emacs-lisp
-(use-package all-the-icons
-   :ensure t)
-(use-package doom-modeline
-  :ensure t
-  :init (doom-modeline-mode 1))
+     (use-package all-the-icons
+       :ensure t)
+     (use-package doom-modeline
+       :ensure t
+       :init (doom-modeline-mode 1))
+
+     ;; (defvar my/tabbar-height 20)
+     ;; (defvar my/tabbar-left (powerline-wave-right 'tabbar-default nil my/tabbar-height))
+     ;; (defvar my/tabbar-right (powerline-wave-left nil 'tabbar-default my/tabbar-height))
+     ;; (defun my/tabbar-tab-label-function (tab)
+     ;;   (powerline-render (list my/tabbar-left
+     ;;                           (format " %s  " (car tab))
+     ;;                           my/tabbar-right)))
+     ;; (setq tabbar-tab-label-function #'my/tabbar-tab-label-function)
    #+END_SRC
 ** yasnippet
    #+BEGIN_SRC emacs-lisp
@@ -246,6 +301,7 @@
          (treemacs-git-mode 'simple))))
     :bind
     (:map global-map
+          ("C-`"       . treemacs-select-window)
           ("M-0"       . treemacs-select-window)
           ("C-x t 1"   . treemacs-delete-other-windows)
           ("C-x t t"   . treemacs)

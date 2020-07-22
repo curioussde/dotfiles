@@ -5,8 +5,51 @@
     (when (memq window-system '(mac ns))
       (exec-path-from-shell-initialize))))
 
-;(setq inhibit-startup-message t)
+(setq inhibit-startup-message t)
+(add-hook 'after-init-hook (lambda () (org-agenda nil "c")))
 (tool-bar-mode -1)
+
+;; (use-package tabbar
+;;   :ensure t
+;;   :config
+
+;;   ;; (set-face-attribute 'tabbar-separator nil :background "gray20" :height 1)
+
+;;   ;; (set-face-attribute 'tabbar-default nil :background "gray20" :foreground "gray60" :distant-foreground "gray50" :family "Helvetica Neue" :box nil :height 1.5)
+;;   ;; (set-face-attribute 'tabbar-unselected nil :background "gray20" :foreground "black" :box nil)
+;;   ;; (set-face-attribute 'tabbar-modified nil :foreground "red4" :box nil :inherit 'tabbar-unselected)
+;;   ;; (set-face-attribute 'tabbar-selected nil :background "#4090c0" :foreground "white" :box nil :inherit 'tabbar-selected)
+;;   ;; (set-face-attribute 'tabbar-selected-modified nil :inherit 'tabbar-selected :foreground "GoldenRod2" :box nil)
+;;   ;; (set-face-attribute 'tabbar-button nil :box nil)
+
+;;   (tabbar-mode 1)
+;;   )
+
+;; (use-package tabbar-ruler
+;;   :ensure t)
+;; (setq tabbar-ruler-global-tabbar t)
+;; (global-set-key (kbd "C-c t") 'tabbar-ruler-move)
+
+(use-package centaur-tabs
+  :demand
+  :bind (("C-S-<tab>" . centaur-tabs-backward)
+         ("C-<tab>" . centaur-tabs-forward)
+         ("C-x p" . centaur-tabs-counsel-switch-group))
+  :custom
+  (centaur-tabs-set-bar 'under)
+  (x-underline-at-descent-line t)
+  (centaur-tabs-set-modified-marker t)
+  (centaur-tabs-modified-marker " ● ")
+  (centaur-tabs-cycle-scope 'tabs)
+  (centaur-tabs-height 30)
+  (centaur-tabs-set-icons t)
+  (centaur-tabs-close-button " × ")
+  :config
+  (centaur-tabs-mode +1)
+  (centaur-tabs-headline-match)
+  (centaur-tabs-group-by-projectile-project)
+  (when (member "Arial" (font-family-list))
+    (centaur-tabs-change-fonts "Arial" 130)))
 
 ;; (use-package zenburn-theme
 ;;   :ensure t
@@ -27,7 +70,7 @@
 (add-hook 'org-shiftright-final-hook 'windmove-right)
 (setq org-support-shift-select 'always)
 
-(desktop-save-mode 1) ;; resume
+;; (desktop-save-mode 1) ;; resume
 (fset 'yes-or-no-p 'y-or-n-p) ;; y/n instead of yes/no
 
 ;;; Write backups to ~/.emacs.d/backup/
@@ -94,10 +137,19 @@
     (global-auto-complete-mode t)))
 
 (use-package all-the-icons
-   :ensure t)
+  :ensure t)
 (use-package doom-modeline
   :ensure t
   :init (doom-modeline-mode 1))
+
+;; (defvar my/tabbar-height 20)
+;; (defvar my/tabbar-left (powerline-wave-right 'tabbar-default nil my/tabbar-height))
+;; (defvar my/tabbar-right (powerline-wave-left nil 'tabbar-default my/tabbar-height))
+;; (defun my/tabbar-tab-label-function (tab)
+;;   (powerline-render (list my/tabbar-left
+;;                           (format " %s  " (car tab))
+;;                           my/tabbar-right)))
+;; (setq tabbar-tab-label-function #'my/tabbar-tab-label-function)
 
 (use-package yasnippet
    :ensure t
@@ -200,6 +252,7 @@
        (treemacs-git-mode 'simple))))
   :bind
   (:map global-map
+        ("C-`"       . treemacs-select-window)
         ("M-0"       . treemacs-select-window)
         ("C-x t 1"   . treemacs-delete-other-windows)
         ("C-x t t"   . treemacs)
@@ -315,12 +368,12 @@
 
 ;; headers
 (defun create-header (title)
-  (format "\n\n\n⚡ %s:\n%s\n"
+  (format "\n\n⚡ %s:\n%s"
           (symbol-value 'title)
           (symbol-value 'title-underline)))
 
 (defun create-first-header (title)
-  (format "⚡ %s:\n%s\n"
+  (format "⚡ %s:\n%s"
           (symbol-value 'title)
           (symbol-value 'title-underline)))
 
@@ -354,33 +407,24 @@
 ;; use am/pm instead 24h format
 (setq org-agenda-timegrid-use-ampm t)
 
-
-
 ;; my custom view of agenda and todos
 (setq org-agenda-custom-commands
-      '(("h" "My Hourly Schedule for Today and Tomorrow"
-         ((agenda "" ((org-agenda-time-grid nil)
-                      (org-agenda-span 1)
-                      (org-deadline-warning-days 365)
-                      (org-agenda-prefix-format "     ")
-                      (org-agenda-sorting-strategy '(deadline-down))
-                      (org-agenda-entry-types '(:deadline))
-                      (org-agenda-overriding-header (create-first-header "Upcoming deadlines"))))
-          (tags-todo "SCHEDULED<\"<today>\""
+      '(("c" "My Custom Summary for Today"
+         ((tags-todo "SCHEDULED<\"<today>\""
                      ((org-agenda-sorting-strategy '(timestamp-down))
-                      (org-agenda-overriding-header (create-header "Overdue tasks"))))
-          (tags-todo "SCHEDULED>\"<today>\"&SCHEDULED<\"<tomorrow>\""
+                      (org-agenda-overriding-header (create-first-header "Overdue tasks"))))
+          (tags-todo "SCHEDULED>=\"<today>\"&SCHEDULED<\"<tomorrow>\"|DEADLINE<\"<tomorrow>\""
                      ((org-agenda-sorting-strategy '(timestamp-down))
-                      (org-agenda-todo-keyword-format "[ ]")
                       (org-agenda-overriding-header (create-header "Today's tasks"))))
           (agenda "" ((org-agenda-span 1)
                       (org-agenda-skip-function '(org-agenda-skip-entry-if 'deadline 'deadline))
-<<<<<<< Updated upstream
-                                        ;(org-agenda-prefix-format "     ")
-
-=======
->>>>>>> Stashed changes
                       (org-agenda-overriding-header (create-header "Schedule"))))
+          (agenda "" ((org-agenda-time-grid nil)
+                      (org-agenda-span 1)
+                      (org-deadline-warning-days 365)
+                      (org-agenda-sorting-strategy '(deadline-down))
+                      (org-agenda-entry-types '(:deadline))
+                      (org-agenda-overriding-header (create-header "Upcoming deadlines"))))
           (agenda "" ((org-agenda-span 1)
                       (org-agenda-start-day "+1d")
                       (org-agenda-overriding-header (create-header "TOMORROW"))))))
@@ -438,9 +482,8 @@
       '(("a" "azu personal")
 
         ("aa" "appointments" entry (file+headline "~/Dropbox/org/personal.org" "appointments")
-         "* TODO %^{PROMPT}
-  SCHEDULED: %^t
-  %?")
+         "* TODO %?
+  SCHEDULED: %^t")
 
         ("ab" "buy" entry (file+headline "~/Dropbox/org/personal.org" "buy")
          "* TODO %^{PROMPT}
@@ -459,21 +502,20 @@
   %?" :prepend t)
 
         ("ar" "reminders" entry (file+headline "~/Dropbox/org/personal.org" "reminders")
-         "* TODO %^{PROMPT}
-  SCHEDULED: %^T
-  %?")
+         "* TODO %?
+  SCHEDULED: %^T")
 
         ("at" "todo" entry (file+headline "~/Dropbox/org/personal.org" "todo")
-         "* TODO %^{PROMPT}
-  DEADLINE: %^T
-  %?")
+         "* TODO %?
+  DEADLINE: %^T")
 
         ("ah" "habits" entry (file+headline "~/Dropbox/org/personal.org" "habits")
-         "* TODO %^{PROMPT}
+         "* TODO %?
+  SCHEDULED: %^T
   :PROPERTIES:
   :STYLE:    habit
   :END:
-  %?")
+  ")
 
 
 
@@ -482,14 +524,12 @@
         ("w" "work related")
 
         ("wa" "appointments" entry (file+headline "~/Dropbox/org/work.org" "meetings")
-         "* TODO %^{PROMPT}
-  SCHEDULED: %^t
-  %?")
+         "* TODO %?
+  SCHEDULED: %^t")
 
         ("wt" "todo" entry (file+headline "~/Dropbox/org/work.org" "todos")
-         "* TODO %^{PROMPT}
-  DEADLINE: %^t
-  %?")
+         "* TODO %?
+  DEADLINE: %^t")
 
         ("wl" "link" entry (file+headline "~/Dropbox/org/work.org" "links")
          "* [[%^{PROMPT}][%?")
