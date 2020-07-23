@@ -7,29 +7,8 @@
 
 (setq inhibit-startup-message t)
 (add-hook 'after-init-hook (lambda () (org-agenda nil "c")))
-(add-hook 'prog-mode-hook 'linum-mode)
+(add-hook 'prog-mode-hook 'global-display-line-numbers-mode)
 (tool-bar-mode -1)
-
-;; (use-package tabbar
-;;   :ensure t
-;;   :config
-
-;;   ;; (set-face-attribute 'tabbar-separator nil :background "gray20" :height 1)
-
-;;   ;; (set-face-attribute 'tabbar-default nil :background "gray20" :foreground "gray60" :distant-foreground "gray50" :family "Helvetica Neue" :box nil :height 1.5)
-;;   ;; (set-face-attribute 'tabbar-unselected nil :background "gray20" :foreground "black" :box nil)
-;;   ;; (set-face-attribute 'tabbar-modified nil :foreground "red4" :box nil :inherit 'tabbar-unselected)
-;;   ;; (set-face-attribute 'tabbar-selected nil :background "#4090c0" :foreground "white" :box nil :inherit 'tabbar-selected)
-;;   ;; (set-face-attribute 'tabbar-selected-modified nil :inherit 'tabbar-selected :foreground "GoldenRod2" :box nil)
-;;   ;; (set-face-attribute 'tabbar-button nil :box nil)
-
-;;   (tabbar-mode 1)
-;;   )
-
-;; (use-package tabbar-ruler
-;;   :ensure t)
-;; (setq tabbar-ruler-global-tabbar t)
-;; (global-set-key (kbd "C-c t") 'tabbar-ruler-move)
 
 (use-package centaur-tabs
   :demand
@@ -44,7 +23,7 @@
   (centaur-tabs-cycle-scope 'tabs)
   (centaur-tabs-height 30)
   (centaur-tabs-set-icons t)
-  (centaur-tabs-close-button " × ")
+  (centaur-tabs-close-button " x")
   :config
   (centaur-tabs-mode +1)
   (centaur-tabs-headline-match)
@@ -423,7 +402,7 @@
           (agenda "" ((org-agenda-time-grid nil)
                       (org-agenda-span 1)
                       (org-deadline-warning-days 365)
-                      (org-agenda-sorting-strategy '(deadline-down))
+                      (org-agenda-sorting-strategy '(deadline-up))
                       (org-agenda-entry-types '(:deadline))
                       (org-agenda-overriding-header (create-header "Upcoming deadlines"))))
           (agenda "" ((org-agenda-span 1)
