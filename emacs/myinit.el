@@ -52,6 +52,10 @@
 
 ;; (desktop-save-mode 1) ;; resume
 (fset 'yes-or-no-p 'y-or-n-p) ;; y/n instead of yes/no
+(show-paren-mode 1)
+(setq-default
+ shell-file-name "/bin/zsh")
+(recentf-mode 1)
 
 ;;; Write backups to ~/.emacs.d/backup/
 (setq backup-directory-alist '(("." . "~/.emacs.d/backup"))
@@ -63,6 +67,31 @@
 
 (use-package try
   :ensure t)
+
+(defconst *is-a-mac* (eq system-type 'darwin))
+
+(when *is-a-mac*
+  (add-to-list 'default-frame-alist
+               '(ns-transparent-titlebar . t))
+
+  (add-to-list 'default-frame-alist
+               '(ns-appearance . dark))
+
+  (add-to-list 'default-frame-alist
+               '(alpha . (99 . 95)))
+
+  (defun stop-minimizing-window ()
+    "Stop minimizing window under macOS."
+    (interactive)
+    (unless (and *is-a-mac*
+                 window-system)
+      (suspend-frame))))
+
+;; undo/redo
+(global-set-key (kbd "s-z") 'undo)
+(global-set-key (kbd "s-Z") 'redo)
+
+
 
 (use-package evil
   :ensure t
@@ -115,6 +144,9 @@
     (progn
     (ac-config-default)
     (global-auto-complete-mode t)))
+
+(setq-default
+ company-idle-delay .5)
 
 (use-package all-the-icons
   :ensure t)
@@ -276,6 +308,10 @@
   (global-set-key (kbd "<s-S-right>")  'buf-move-right)
   (global-set-key (kbd "<s-S-up>")  'buf-move-up)
   (global-set-key (kbd "<s-S-down>")  'buf-move-down))
+
+(use-package rainbow-delimiters
+  :ensure t)
+(add-hook 'prog-mode-hook  #'rainbow-delimiters-mode)
 
 (use-package aggressive-indent
 :ensure t

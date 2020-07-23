@@ -69,6 +69,10 @@
    #+BEGIN_SRC emacs-lisp
      ;; (desktop-save-mode 1) ;; resume
      (fset 'yes-or-no-p 'y-or-n-p) ;; y/n instead of yes/no
+     (show-paren-mode 1)
+     (setq-default
+      shell-file-name "/bin/zsh")
+     (recentf-mode 1)
    #+END_SRC
 ** backups
 #+BEGIN_SRC emacs-lisp
@@ -86,6 +90,39 @@
 (use-package try
   :ensure t)
    #+END_SRC
+** is-a-mac
+#+BEGIN_SRC emacs-lisp
+(defconst *is-a-mac* (eq system-type 'darwin))
+#+END_SRC
+** macOS frame
+#+BEGIN_SRC emacs-lisp
+  (when *is-a-mac*
+    (add-to-list 'default-frame-alist
+                 '(ns-transparent-titlebar . t))
+
+    (add-to-list 'default-frame-alist
+                 '(ns-appearance . dark))
+
+    (add-to-list 'default-frame-alist
+                 '(alpha . (99 . 95)))
+
+    (defun stop-minimizing-window ()
+      "Stop minimizing window under macOS."
+      (interactive)
+      (unless (and *is-a-mac*
+                   window-system)
+        (suspend-frame))))
+#+END_SRC
+** macOS key bindings
+#+BEGIN_SRC emacs-lisp
+  ;; undo/redo
+  (global-set-key (kbd "s-z") 'undo)
+  (global-set-key (kbd "s-Z") 'redo)
+#+END_SRC
+** TODO default-text-scale
+#+BEGIN_SRC emacs-lisp
+
+#+END_SRC
 ** evil
    #+BEGIN_SRC emacs-lisp
 (use-package evil
@@ -150,6 +187,11 @@
     (ac-config-default)
     (global-auto-complete-mode t)))
    #+END_SRC
+** company
+#+BEGIN_SRC emacs-lisp
+  (setq-default
+   company-idle-delay .5)
+#+END_SRC
 ** modeline/powerline
    #+BEGIN_SRC emacs-lisp
      (use-package all-the-icons
@@ -329,6 +371,12 @@
     (global-set-key (kbd "<s-S-right>")  'buf-move-right)
     (global-set-key (kbd "<s-S-up>")  'buf-move-up)
     (global-set-key (kbd "<s-S-down>")  'buf-move-down))
+#+END_SRC
+** rainbow-delimiters
+#+BEGIN_SRC emacs-lisp
+  (use-package rainbow-delimiters
+    :ensure t)
+  (add-hook 'prog-mode-hook  #'rainbow-delimiters-mode)
 #+END_SRC
 ** aggressive-indent
 #+BEGIN_SRC emacs-lisp
@@ -613,7 +661,7 @@
     ;;
     ;;    (setq org-ditaa-jar-path "/usr/share/ditaa/ditaa.jar")
 #+END_SRC
-** org-refile
+** refile
 #+BEGIN_SRC emacs-lisp
   (setq org-refile-targets '((org-agenda-files :maxlevel . 3)))
 #+END_SRC
