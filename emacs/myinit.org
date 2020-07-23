@@ -387,6 +387,24 @@
 ;;(add-to-list 'aggressive-indent-excluded-modes 'html-mode)
 )
 #+END_SRC
+** spell-checking
+#+BEGIN_SRC emacs-lisp
+
+#+END_SRC
+** markdown-mode;;;; markdown-mode
+http://jblevins.org/projects/markdown-mode/
+For the preview required to install
+- Ubuntu: sudo apt-get install libtext-multimarkdown-perl
+- MacOSX: brew install multimarkdown
+#+BEGIN_SRC emacs-lisp
+  (use-package markdown-mode
+    :ensure t
+    :commands (markdown-mode gfm-mode)
+    :mode (("README\\.md\\'" . gfm-mode)
+           ("\\.md\\'" . markdown-mode)
+           ("\\.markdown\\'" . markdown-mode))
+    :init (setq markdown-command "multimarkdown"))
+#+END_SRC
 * org
 ** main
 #+BEGIN_SRC emacs-lisp
@@ -504,30 +522,33 @@
   ;; my custom view of agenda and todos
   (setq org-agenda-custom-commands
         '(("c" "My Custom Summary for Today"
-           ((tags-todo "SCHEDULED<\"<today>\""
+           ((agenda "" ((org-agenda-time-grid nil)
+                        (org-agenda-span 1)
+                        (org-deadline-warning-days 365)
+                        (org-agenda-sorting-strategy '(deadline-down))
+                        (org-agenda-entry-types '(:deadline))
+                        (org-agenda-overriding-header (create-first-header "Upcoming deadlines"))))
+            (tags-todo "SCHEDULED<\"<today>\""
                        ((org-agenda-sorting-strategy '(timestamp-down))
-                        (org-agenda-overriding-header (create-first-header "Overdue tasks"))))
+                        (org-agenda-overriding-header (create-header "Overdue tasks"))))
             (tags-todo "SCHEDULED>=\"<today>\"&SCHEDULED<\"<tomorrow>\"|DEADLINE<\"<tomorrow>\""
                        ((org-agenda-sorting-strategy '(timestamp-down))
                         (org-agenda-overriding-header (create-header "Today's tasks"))))
             (agenda "" ((org-agenda-span 1)
                         (org-agenda-skip-function '(org-agenda-skip-entry-if 'deadline 'deadline))
                         (org-agenda-overriding-header (create-header "Schedule"))))
-            (agenda "" ((org-agenda-time-grid nil)
-                        (org-agenda-span 1)
-                        (org-deadline-warning-days 365)
-                        (org-agenda-sorting-strategy '(deadline-up))
-                        (org-agenda-entry-types '(:deadline))
-                        (org-agenda-overriding-header (create-header "Upcoming deadlines"))))
+            (todo "TODO" ((org-agenda-sorting-strategy '(tag-up priority-down))
+                        (org-agenda-overriding-header (create-header "todo w/o deadline"))))
             (agenda "" ((org-agenda-span 1)
                         (org-agenda-start-day "+1d")
+                        (org-agenda-time-grid nil)
                         (org-agenda-overriding-header (create-header "TOMORROW"))))))
           ("d" "My Daily Schedule for Next Month"
            ((agenda "" ((org-agenda-span 30)
                         (org-agenda-start-on-weekday nil)
                         (org-agenda-show-all-dates t)
                         (org-agenda-time-grid nil)
-                        ;; (org-agenda-start-day "+1d")q
+                        ;; (org-agenda-start-day "+1d")
                         (org-agenda-overriding-header (create-first-header "NEXT MONTH"))))))))
 
   ;; define custom time grid

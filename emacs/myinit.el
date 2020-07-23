@@ -320,6 +320,16 @@
 ;;(add-to-list 'aggressive-indent-excluded-modes 'html-mode)
 )
 
+
+
+(use-package markdown-mode
+  :ensure t
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :init (setq markdown-command "multimarkdown"))
+
 (custom-set-faces
  '(org-document-title ((t (:weight bold :height 2.0)))) 
  '(org-level-1 ((t (:inherit outline-1 :weight semibold :font "Source Code Pro" :height 1.75))))
