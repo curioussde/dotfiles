@@ -43,15 +43,15 @@
 #+END_SRC
 ** themes
    #+BEGIN_SRC emacs-lisp
-     (use-package zenburn-theme
-       :ensure t
-       :config
-       (load-theme 'zenburn t))
-
-     ;; (use-package atom-one-dark-theme
+     ;; (use-package zenburn-theme
      ;;   :ensure t
      ;;   :config
-     ;;   (load-theme 'atom-one-dark t))
+     ;;   (load-theme 'zenburn t))
+
+     (use-package atom-one-dark-theme
+       :ensure t
+       :config
+       (load-theme 'atom-one-dark t))
    #+END_SRC
 * navigation
 ** keys
@@ -118,10 +118,6 @@
   ;; undo/redo
   (global-set-key (kbd "s-z") 'undo)
   (global-set-key (kbd "s-Z") 'redo)
-#+END_SRC
-** TODO default-text-scale
-#+BEGIN_SRC emacs-lisp
-
 #+END_SRC
 ** evil
    #+BEGIN_SRC emacs-lisp
@@ -391,7 +387,7 @@
 #+BEGIN_SRC emacs-lisp
 
 #+END_SRC
-** markdown-mode;;;; markdown-mode
+** markdown-mode
 http://jblevins.org/projects/markdown-mode/
 For the preview required to install
 - Ubuntu: sudo apt-get install libtext-multimarkdown-perl
@@ -405,7 +401,23 @@ For the preview required to install
            ("\\.markdown\\'" . markdown-mode))
     :init (setq markdown-command "multimarkdown"))
 #+END_SRC
-* org
+** plantuml-mode
+#+BEGIN_SRC emacs-lisp
+  (use-package plantuml-mode
+    :init
+    (add-to-list 'auto-mode-alist '("\\.plantuml\\'". plantuml-mode)) ;; Ref https://github.com/skuro/plantuml-mode/blob/ea45a13707abd2a70df183f1aec6447197fc9ccc/README.md#enable-the-major-mode
+    :config
+    (setq plantuml-default-exec-mode 'executable) ;; Ref https://github.com/skuro/plantuml-mode/blob/ea45a13707abd2a70df183f1aec6447197fc9ccc/README.md#execution-modes and https://github.com/skuro/plantuml-mode/blob/ea45a13707abd2a70df183f1aec6447197fc9ccc/README.md#quick-guide
+    )
+#+END_SRC
+** dumb-jump
+#+BEGIN_SRC emacs-lisp
+  (use-package dumb-jump
+    :bind (("M-g j" . dumb-jump-go)
+           ;; No need to bind `dumb-jump-back` - just use `M-,` i.e. `xref-pop-marker-stack`.
+           ))
+#+END_SRC
+** org
 ** main
 #+BEGIN_SRC emacs-lisp
   (custom-set-faces
@@ -439,17 +451,20 @@ For the preview required to install
 #+END_SRC
 ** languages
 #+BEGIN_SRC emacs-lisp
-  (setq org-babel-load-languages
-        '((python . t)
-          (shell . t)
-          (js . t)
-          (org . t)
-          (C . t)
-          (sql . t)
-          (java . t)
-          (plantuml . t)
-          (typescript . t)
-          ))
+  (with-eval-after-load 'org
+    (org-babel-do-load-languages 'org-babel-load-languages 
+                                 '((ruby . t)
+                                   (python . t)
+                                   (shell . t)
+                                   (js . t)
+                                   (org . t)
+                                   (C . t)
+                                   (sql . t)
+                                   (java . t)
+                                   (plantuml . t)
+                                   )))
+(setq org-plantuml-jar-path
+      (expand-file-name "~/plantuml.jar"))
 #+END_SRC
 ** bullets 
 #+BEGIN_SRC emacs-lisp

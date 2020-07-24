@@ -31,15 +31,15 @@
   (when (member "Arial" (font-family-list))
     (centaur-tabs-change-fonts "Arial" 130)))
 
-(use-package zenburn-theme
-  :ensure t
-  :config
-  (load-theme 'zenburn t))
-
-;; (use-package atom-one-dark-theme
+;; (use-package zenburn-theme
 ;;   :ensure t
 ;;   :config
-;;   (load-theme 'atom-one-dark t))
+;;   (load-theme 'zenburn t))
+
+(use-package atom-one-dark-theme
+  :ensure t
+  :config
+  (load-theme 'atom-one-dark t))
 
 ; shift arrow to move around split sindows
 (windmove-default-keybindings)
@@ -90,8 +90,6 @@
 ;; undo/redo
 (global-set-key (kbd "s-z") 'undo)
 (global-set-key (kbd "s-Z") 'redo)
-
-
 
 (use-package evil
   :ensure t
@@ -330,6 +328,18 @@
          ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
 
+(use-package plantuml-mode
+  :init
+  (add-to-list 'auto-mode-alist '("\\.plantuml\\'". plantuml-mode)) ;; Ref https://github.com/skuro/plantuml-mode/blob/ea45a13707abd2a70df183f1aec6447197fc9ccc/README.md#enable-the-major-mode
+  :config
+  (setq plantuml-default-exec-mode 'executable) ;; Ref https://github.com/skuro/plantuml-mode/blob/ea45a13707abd2a70df183f1aec6447197fc9ccc/README.md#execution-modes and https://github.com/skuro/plantuml-mode/blob/ea45a13707abd2a70df183f1aec6447197fc9ccc/README.md#quick-guide
+  )
+
+(use-package dumb-jump
+  :bind (("M-g j" . dumb-jump-go)
+         ;; No need to bind `dumb-jump-back` - just use `M-,` i.e. `xref-pop-marker-stack`.
+         ))
+
 (custom-set-faces
  '(org-document-title ((t (:weight bold :height 2.0)))) 
  '(org-level-1 ((t (:inherit outline-1 :weight semibold :font "Source Code Pro" :height 1.75))))
@@ -436,30 +446,33 @@
 ;; my custom view of agenda and todos
 (setq org-agenda-custom-commands
       '(("c" "My Custom Summary for Today"
-         ((tags-todo "SCHEDULED<\"<today>\""
+         ((agenda "" ((org-agenda-time-grid nil)
+                      (org-agenda-span 1)
+                      (org-deadline-warning-days 365)
+                      (org-agenda-sorting-strategy '(deadline-down))
+                      (org-agenda-entry-types '(:deadline))
+                      (org-agenda-overriding-header (create-first-header "Upcoming deadlines"))))
+          (tags-todo "SCHEDULED<\"<today>\""
                      ((org-agenda-sorting-strategy '(timestamp-down))
-                      (org-agenda-overriding-header (create-first-header "Overdue tasks"))))
+                      (org-agenda-overriding-header (create-header "Overdue tasks"))))
           (tags-todo "SCHEDULED>=\"<today>\"&SCHEDULED<\"<tomorrow>\"|DEADLINE<\"<tomorrow>\""
                      ((org-agenda-sorting-strategy '(timestamp-down))
                       (org-agenda-overriding-header (create-header "Today's tasks"))))
           (agenda "" ((org-agenda-span 1)
                       (org-agenda-skip-function '(org-agenda-skip-entry-if 'deadline 'deadline))
                       (org-agenda-overriding-header (create-header "Schedule"))))
-          (agenda "" ((org-agenda-time-grid nil)
-                      (org-agenda-span 1)
-                      (org-deadline-warning-days 365)
-                      (org-agenda-sorting-strategy '(deadline-up))
-                      (org-agenda-entry-types '(:deadline))
-                      (org-agenda-overriding-header (create-header "Upcoming deadlines"))))
+          (todo "TODO" ((org-agenda-sorting-strategy '(tag-up priority-down))
+                      (org-agenda-overriding-header (create-header "todo w/o deadline"))))
           (agenda "" ((org-agenda-span 1)
                       (org-agenda-start-day "+1d")
+                      (org-agenda-time-grid nil)
                       (org-agenda-overriding-header (create-header "TOMORROW"))))))
         ("d" "My Daily Schedule for Next Month"
          ((agenda "" ((org-agenda-span 30)
                       (org-agenda-start-on-weekday nil)
                       (org-agenda-show-all-dates t)
                       (org-agenda-time-grid nil)
-                      ;; (org-agenda-start-day "+1d")q
+                      ;; (org-agenda-start-day "+1d")
                       (org-agenda-overriding-header (create-first-header "NEXT MONTH"))))))))
 
 ;; define custom time grid
