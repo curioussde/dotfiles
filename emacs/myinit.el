@@ -187,10 +187,22 @@
 (use-package groovy-mode
   :ensure t)
 
+;; git wrapper
 (use-package magit
-:ensure t
-:config
-(global-set-key (kbd "C-x g") 'magit-status))
+  :ensure t
+  :config
+  (global-set-key (kbd "C-x g") 'magit-status))
+
+(use-package diff-hl
+  :ensure t
+  :defer 3
+  :init
+  (global-diff-hl-mode 1)
+  (diff-hl-dir-mode 1)
+  (diff-hl-margin-mode 1)
+  (advice-add 'svn-status-update-modeline :after #'diff-hl-update)
+  (add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
+  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
 
 (use-package projectile
   :ensure t
@@ -369,17 +381,20 @@
 ("CANCELED" . "skyblue")
 ("DEFERRED" . "skyblue")))
 
-(setq org-babel-load-languages
-      '((python . t)
-        (shell . t)
-        (js . t)
-        (org . t)
-        (C . t)
-        (sql . t)
-        (java . t)
-        (plantuml . t)
-        (typescript . t)
-        ))
+(with-eval-after-load 'org
+    (org-babel-do-load-languages 'org-babel-load-languages 
+                                 '((ruby . t)
+                                   (python . t)
+                                   (shell . t)
+                                   (js . t)
+                                   (org . t)
+                                   (C . t)
+                                   (sql . t)
+                                   (java . t)
+                                   (plantuml . t)
+                                   )))
+(setq org-plantuml-jar-path
+      (expand-file-name "~/plantuml.jar"))
 
 (use-package org-bullets
 :ensure t
