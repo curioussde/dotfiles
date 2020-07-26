@@ -50,7 +50,11 @@
 (add-hook 'org-shiftright-final-hook 'windmove-right)
 (setq org-support-shift-select 'always)
 
-;; (desktop-save-mode 1) ;; resume
+
+(global-set-key (kbd "<home>") 'beginning-of-line)
+(global-set-key (kbd "<end>") 'end-of-line)
+
+(desktop-save-mode 1) ;; resume
 (fset 'yes-or-no-p 'y-or-n-p) ;; y/n instead of yes/no
 (show-paren-mode 1)
 (setq-default

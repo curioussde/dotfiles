@@ -56,18 +56,22 @@
 * navigation
 ** keys
 #+BEGIN_SRC emacs-lisp
-; shift arrow to move around split sindows
-(windmove-default-keybindings)
+  ; shift arrow to move around split sindows
+  (windmove-default-keybindings)
 
-(add-hook 'org-shiftup-final-hook 'windmove-up)
-(add-hook 'org-shiftleft-final-hook 'windmove-left)
-(add-hook 'org-shiftdown-final-hook 'windmove-down)
-(add-hook 'org-shiftright-final-hook 'windmove-right)
-(setq org-support-shift-select 'always)
+  (add-hook 'org-shiftup-final-hook 'windmove-up)
+  (add-hook 'org-shiftleft-final-hook 'windmove-left)
+  (add-hook 'org-shiftdown-final-hook 'windmove-down)
+  (add-hook 'org-shiftright-final-hook 'windmove-right)
+  (setq org-support-shift-select 'always)
+
+
+  (global-set-key (kbd "<home>") 'beginning-of-line)
+  (global-set-key (kbd "<end>") 'end-of-line)
    #+END_SRC
 ** mode
    #+BEGIN_SRC emacs-lisp
-     ;; (desktop-save-mode 1) ;; resume
+     (desktop-save-mode 1) ;; resume
      (fset 'yes-or-no-p 'y-or-n-p) ;; y/n instead of yes/no
      (show-paren-mode 1)
      (setq-default
@@ -428,7 +432,7 @@ For the preview required to install
            ;; No need to bind `dumb-jump-back` - just use `M-,` i.e. `xref-pop-marker-stack`.
            ))
 #+END_SRC
-** org
+* org
 ** main
 #+BEGIN_SRC emacs-lisp
   (custom-set-faces
