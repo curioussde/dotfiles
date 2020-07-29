@@ -82,7 +82,7 @@
                '(ns-appearance . dark))
 
   (add-to-list 'default-frame-alist
-               '(alpha . (99 . 95)))
+               '(alpha . (98 . 98)))
 
   (defun stop-minimizing-window ()
     "Stop minimizing window under macOS."
@@ -565,7 +565,7 @@
 
         ("at" "todo" entry (file+headline "~/Dropbox/org/personal.org" "todo")
          "* TODO %?
-  DEADLINE: %^T")
+  SCHEDULED: %^T")
 
         ("ah" "habits" entry (file+headline "~/Dropbox/org/personal.org" "habits")
          "* TODO %?
@@ -587,7 +587,7 @@
 
         ("wt" "todo" entry (file+headline "~/Dropbox/org/work.org" "todos")
          "* TODO %?
-  DEADLINE: %^t")
+  SCHEDULED: %^t")
 
         ("wl" "link" entry (file+headline "~/Dropbox/org/work.org" "links")
          "* [[%^{PROMPT}][%?")

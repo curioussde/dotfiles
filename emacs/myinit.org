@@ -108,7 +108,7 @@
                  '(ns-appearance . dark))
 
     (add-to-list 'default-frame-alist
-                 '(alpha . (99 . 95)))
+                 '(alpha . (98 . 98)))
 
     (defun stop-minimizing-window ()
       "Stop minimizing window under macOS."
