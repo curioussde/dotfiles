@@ -41,6 +41,10 @@
       (centaur-tabs-change-fonts "Arial" 130)))
 
 #+END_SRC
+** wrap-lines
+#+BEGIN_SRC emacs-lisp
+  (global-visual-line-mode 1)
+#+END_SRC
 ** themes
    #+BEGIN_SRC emacs-lisp
      ;; (use-package zenburn-theme
@@ -52,7 +56,7 @@
        :ensure t
        :config
        (load-theme 'atom-one-dark t))
-   #+END_SRC
+#+END_SRC
 * navigation
 ** keys
 #+BEGIN_SRC emacs-lisp
@@ -68,7 +72,8 @@
 
   (global-set-key (kbd "<home>") 'beginning-of-line)
   (global-set-key (kbd "<end>") 'end-of-line)
-   #+END_SRC
+
+#+END_SRC
 ** mode
    #+BEGIN_SRC emacs-lisp
      (desktop-save-mode 1) ;; resume
@@ -77,7 +82,7 @@
      (setq-default
       shell-file-name "/bin/zsh")
      (recentf-mode 1)
-   #+END_SRC
+#+END_SRC
 ** backups
 #+BEGIN_SRC emacs-lisp
   ;;; Write backups to ~/.emacs.d/backup/
@@ -93,7 +98,7 @@
    #+BEGIN_SRC emacs-lisp
 (use-package try
   :ensure t)
-   #+END_SRC
+#+END_SRC
 ** is-a-mac
 #+BEGIN_SRC emacs-lisp
 (defconst *is-a-mac* (eq system-type 'darwin))
@@ -139,7 +144,7 @@
   :ensure t
   :config
   (evil-collection-init))
-   #+END_SRC
+#+END_SRC
 ** evil-mc (multiple cursor)
 #+BEGIN_SRC emacs-lisp
 (use-package evil-mc
@@ -177,7 +182,7 @@
   :ensure t
   :config
     (which-key-mode))
-   #+END_SRC
+#+END_SRC
 ** auto-complete
    #+BEGIN_SRC emacs-lisp
 (use-package auto-complete
@@ -186,7 +191,7 @@
     (progn
     (ac-config-default)
     (global-auto-complete-mode t)))
-   #+END_SRC
+#+END_SRC
 ** company
 #+BEGIN_SRC emacs-lisp
   (setq-default
@@ -208,7 +213,7 @@
      ;;                           (format " %s  " (car tab))
      ;;                           my/tabbar-right)))
      ;; (setq tabbar-tab-label-function #'my/tabbar-tab-label-function)
-   #+END_SRC
+#+END_SRC
 ** yasnippet
    #+BEGIN_SRC emacs-lisp
 (use-package yasnippet
@@ -219,7 +224,7 @@
    :ensure t)
 (use-package auto-yasnippet
    :ensure t)
-   #+END_SRC
+#+END_SRC
 ** flycheck
 #+BEGIN_SRC emacs-lisp
   (use-package flycheck
@@ -431,6 +436,13 @@ For the preview required to install
     :bind (("M-g j" . dumb-jump-go)
            ;; No need to bind `dumb-jump-back` - just use `M-,` i.e. `xref-pop-marker-stack`.
            ))
+#+END_SRC
+** json-mode
+#+BEGIN_SRC emacs-lisp
+(use-package json-mode
+  :ensure t
+  :mode (("\\.json\\'" . json-mode)
+         ("\\.tmpl\\'" . json-mode)))
 #+END_SRC
 * org
 ** main

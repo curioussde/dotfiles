@@ -31,6 +31,8 @@
   (when (member "Arial" (font-family-list))
     (centaur-tabs-change-fonts "Arial" 130)))
 
+(global-visual-line-mode 1)
+
 ;; (use-package zenburn-theme
 ;;   :ensure t
 ;;   :config
@@ -355,6 +357,11 @@
   :bind (("M-g j" . dumb-jump-go)
          ;; No need to bind `dumb-jump-back` - just use `M-,` i.e. `xref-pop-marker-stack`.
          ))
+
+(use-package json-mode
+  :ensure t
+  :mode (("\\.json\\'" . json-mode)
+         ("\\.tmpl\\'" . json-mode)))
 
 (custom-set-faces
  '(org-document-title ((t (:weight bold :height 2.0)))) 
